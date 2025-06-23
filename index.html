@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match Puzzle with Levels</title>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f1faee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16H8V8h3v10zm5 0h-3V8h3v10z"/>
+                <path d="M7 7.5L5 9.5M19 14.5L17 12.5"/>
+            </svg>
+            Memory Match - Level <span id="current-level-display">1</span>
+        </h1>
+
+        <div class="scoreboard">
+            <div class="score-item">
+                Time: <span id="time-taken">0s</span>
+            </div>
+            <div class="score-item">
+                Moves: <span id="moves-count">0</span>
+            </div>
+        </div>
+
+        <!-- Memory Match Card Grid -->
+        <div class="card-grid" id="card-grid">
+            <!-- Cards will be dynamically generated here -->
+        </div>
+
+        <!-- Easy Game Board (Quick Click Challenge) -->
+        <div class="easy-game-board" id="easy-game-board">
+            <h3>Quick Click Challenge!</h3>
+            <p>Click the target <span class="highlight-text" id="clicks-needed-display"></span> times!</p>
+            <p>Time Left: <span class="highlight-text" id="easy-time"></span>s</p>
+            <div id="easy-target" class="easy-target-button">
+                <!-- Emoji will be dynamically inserted here -->
+            </div>
+            <p>Current Clicks: <span class="highlight-text" id="easy-clicks">0</span></p>
+        </div>
+
+        <!-- Picture Puzzle Game Board -->
+        <div class="picture-puzzle-board" id="picture-puzzle-board">
+            <h3>Sliding Puzzle!</h3>
+            <div class="puzzle-grid" id="puzzle-grid">
+                <!-- Puzzle tiles will be dynamically generated here -->
+            </div>
+            <div class="puzzle-info">
+                Moves: <span id="puzzle-moves">0</span> | Time: <span id="puzzle-time">0s</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="start-button">Start Game</button>
+        </div>
+
+        <div class="game-over-message" id="gameOverMessage">
+            <h2 id="gameOverTitle"></h2>
+            <p>Time: <span id="finalTime">0s</span></p>
+            <p>Moves: <span id="finalMoves">0</span></p>
+            <button id="nextLevelButton"></button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
