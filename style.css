@@ -1,0 +1,445 @@
+/* General body styling */
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f1faee, #a8dadc);
+    color: #1d3557;
+    overflow-x: hidden;
+}
+
+/* Game container styling */
+.game-container {
+    background-color: #457b9d;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    width: 95%;
+    max-width: 800px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Title styling */
+h1 {
+    color: #e63946;
+    margin-bottom: 20px;
+    font-size: 2.8em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+h1 svg {
+    height: 1.2em;
+    width: auto;
+    vertical-align: middle;
+}
+
+/* Scoreboard styling */
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: rgba(29, 53, 87, 0.1);
+    border-radius: 15px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #f1faee;
+}
+
+.score-item span {
+    margin-left: 8px;
+    font-size: 1.6em;
+    color: #f1faee;
+}
+
+/* Card grid styling (Memory Match) */
+.card-grid {
+    display: grid;
+    grid-gap: 15px;
+    padding: 20px;
+    background-color: #1d3557;
+    border-radius: 15px;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: fit-content;
+    margin: 0 auto 25px;
+    box-sizing: border-box;
+    transition: max-width 0.5s ease;
+}
+
+/* Individual card styling */
+.card {
+    width: 100px;
+    height: 100px;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #1d3557;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-front {
+    background-color: #e63946;
+    transform: rotateY(0deg);
+    border: 4px solid #c22d3e;
+    color: #f1faee;
+    font-size: 3em;
+}
+
+.card-back {
+    background-color: #f1faee;
+    transform: rotateY(180deg);
+    border: 4px solid #ddd;
+}
+
+.card.matched .card-inner {
+    opacity: 0.5;
+    pointer-events: none;
+    transform: rotateY(180deg) scale(0.95);
+    transition: opacity 0.5s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Button styling */
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    background: linear-gradient(135deg, #f1faee, #a8dadc);
+    color: #1d3557;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, #a8dadc, #f1faee);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Game Over / Level Complete message styling */
+.game-over-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(230, 57, 70, 0.95);
+    color: #f1faee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    font-size: 2.2em;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease-out;
+    z-index: 10;
+}
+
+.game-over-message.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.game-over-message button {
+    margin-top: 30px;
+    padding: 15px 35px;
+    font-size: 1.4em;
+}
+
+/* Easy Game (Quick Click Challenge) Specific Styling */
+.easy-game-board {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1d3557;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    color: #f1faee;
+    font-size: 1.2em;
+}
+
+.easy-game-board h3 {
+    color: #a8dadc;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.easy-game-board p {
+    margin-bottom: 10px;
+}
+
+.highlight-text {
+    color: #e63946;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.easy-target-button {
+    width: 150px;
+    height: 150px;
+    background-color: #e63946;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    font-weight: bold;
+    color: #f1faee;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    user-select: none;
+    margin-top: 20px;
+}
+
+.easy-target-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.easy-target-button:active {
+    transform: scale(0.95);
+    background-color: #c22d3e;
+}
+
+/* Picture Puzzle Game Specific Styling */
+.picture-puzzle-board {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1d3557;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: content-box;
+}
+
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 300px;
+    height: 300px;
+    border: 2px solid #a8dadc;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.puzzle-tile {
+    width: 100px;
+    height: 100px;
+    background-color: #a8dadc;
+    border: 1px solid #1d3557;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #1d3557;
+    cursor: pointer;
+    transition: transform 0.1s ease-out, background-color 0.2s ease;
+    user-select: none;
+    position: relative;
+}
+
+.puzzle-tile.empty {
+    background-color: transparent;
+    cursor: default;
+    pointer-events: none;
+    border: none;
+}
+
+.puzzle-info {
+    color: #f1faee;
+    font-size: 1.1em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.puzzle-info span {
+    color: #e63946;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+    }
+    h1 svg {
+        height: 1em;
+        gap: 10px;
+    }
+    .scoreboard {
+        font-size: 1.1em;
+        padding: 10px;
+    }
+    .score-item span {
+        font-size: 1.4em;
+    }
+    .card-grid {
+        grid-gap: 10px;
+        padding: 15px;
+    }
+    .card {
+        width: 80px;
+        height: 80px;
+    }
+    .card-front, .card-back {
+        font-size: 2.5em;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .game-over-message {
+        font-size: 1.8em;
+        padding: 20px;
+    }
+    .game-over-message button {
+        padding: 12px 25px;
+        font-size: 1.2em;
+    }
+    .easy-target-button {
+        width: 120px;
+        height: 120px;
+        font-size: 2.5em;
+    }
+    .picture-puzzle-board {
+        width: 250px;
+        height: 250px;
+        padding: 20px;
+    }
+    .puzzle-grid {
+        width: 230px;
+        height: 230px;
+    }
+    .puzzle-tile {
+        width: 76.66px;
+        height: 76.66px;
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    h1 svg {
+        height: 0.9em;
+        gap: 8px;
+    }
+    .scoreboard {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .card {
+        width: 65px;
+        height: 65px;
+    }
+    .card-front, .card-back {
+        font-size: 2em;
+    }
+    .game-over-message {
+        font-size: 1.4em;
+        padding: 15px;
+    }
+    .easy-target-button {
+        width: 100px;
+        height: 100px;
+        font-size: 2em;
+    }
+    .picture-puzzle-board {
+        width: 200px;
+        height: 200px;
+        padding: 15px;
+    }
+    .puzzle-grid {
+        width: 180px;
+        height: 180px;
+    }
+    .puzzle-tile {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+    }
+}
